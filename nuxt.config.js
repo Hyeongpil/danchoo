@@ -2,6 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
+  telemetry: false,
   /*
    ** Headers of the page
    */
@@ -56,7 +57,7 @@ module.exports = {
   },
   // 미들웨어에 접근인증을 위해 추가
   router: {
-    middleware: 'auth'
+    // middleware:
   },
   proxy: {
     '/albums': {

@@ -6,7 +6,7 @@
   >
     <template slot="brand">
       <a class="navbar-item" href="/">
-        <img src="~assets/buefy.png" alt="Buefy" height="28" />
+        <!-- <img src="~assets/" alt="Buefy" height="28" /> -->
       </a>
     </template>
     <template slot="end">

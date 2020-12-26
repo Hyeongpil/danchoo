@@ -18,9 +18,7 @@ import Card from '~/components/UI/card/Card.vue'
 
 @Component({
   name: 'InspirePage',
-  components: { Card },
-  layout: 'admin'
+  components: { Card }
 })
 export default class Inspire extends Vue {}
 </script>
-ㅊ
