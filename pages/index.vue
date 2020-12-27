@@ -1,17 +1,27 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <div class="title">{{title}}</div>
+    <div class="flex flex-row flex-wrap">
+      <div v-for="(card, idx) in test" :key="idx" class="w-1/4"> 
+      <card />
+    </div>
+    </div>
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "nuxt-property-decorator"
 import { Route } from 'vue-router'
+import Card from "~/components/organisms/Card.vue"
+
 @Component({
-  name:'Main'
+  name:'Main',
+  components: { Card }
 })
 export default class Main extends Vue {
   private title: string = '전체'
+  private test: number[]= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
   private titleChange(path: string){
     if(path === '/') this.title = '전체'

@@ -67,6 +67,9 @@ module.exports = {
       white: '#ffffff',
       grey: '#8C8E92',
       'grey-light': '#DADCE0',
+      'grey-text': '#BEC0C4',
+      'grey-chip': '#383A3E',
+      'grey-chip-text': '#C0C2C6',
       background: '#1C1E21',
       'background-light': '#222427',
       primary: '#414fff',
@@ -197,12 +200,13 @@ module.exports = {
     */
 
     fontSize: {
-      xs: '.75rem', // 12px
-      sm: '.875rem', // 14px
-      base: '1rem', // 16px
-      lg: '1.125rem', // 18px
-      xl: '1.25rem', // 20px
-      '2xl': '1.5rem', // 24px
+      xxs: '10px',
+      xs: '11px', 
+      sm: '13px',
+      base: '14px',
+      lg: '16px',
+      xl: '20px',
+      '2xl': '24px',
       '3xl': '1.875rem', // 30px
       '4xl': '2.25rem', // 36px
       '5xl': '3rem', // 48px
@@ -411,6 +415,7 @@ module.exports = {
       auto: 'auto',
       px: '1px',
       1: '0.25rem',
+      1.5: '0.375rem',
       2: '0.5rem',
       3: '0.75rem',
       4: '1rem',
@@ -469,6 +474,7 @@ module.exports = {
       auto: 'auto',
       px: '1px',
       1: '0.25rem',
+      1.5: '0.375rem',
       2: '0.5rem',
       3: '0.75rem',
       4: '1rem',
@@ -592,6 +598,7 @@ module.exports = {
       base: '2.2rem',
       0: '0',
       1: '0.25rem',
+      1.5: '0.375rem',
       2: '0.5rem',
       3: '0.75rem',
       4: '1rem',
