@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="chip text-grey-chip-text text-xxs px-1.5 py-1" :class="getClass()">{{content}}</span>  
+        <span class="chip text-grey-chip-text text-xxs cursor-pointer" :class="getClass()">{{content}}</span>  
     </div>
 </template>
 
@@ -27,5 +27,12 @@ export default class DcChip extends Vue {
 <style lang="scss" scoped>
 .chip{
     border-radius: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.bg-grey-chip{
+    background: #383A3E;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col m-body">
-      <card-img />
-      <dc-text class="m-content" content="플러스 엑스" size="xs" color="grey-text"/>
-      <dc-text class="m-text" content="카카오페이지 브랜드 리뉴얼 프로젝트" size="lg" weight="medium"/>
+      <card-img class="cursor-pointer"/>
+      <dc-text class="m-content cursor-pointer" content="플러스 엑스" size="xs" color="grey-text" @click.native="onCompanyClicked()"/>
+      <dc-text class="m-text cursor-pointer" content="카카오페이지 브랜드 리뉴얼 프로젝트" size="lg" weight="medium"/>
       <dc-chip class="m-chip" content="#대기업"/>
   </div>
 </template>
@@ -19,6 +19,9 @@ import DcText from "../atoms/DcText.vue"
 })
 export default class Card extends Vue {
 
+    private onCompanyClicked(){
+        console.log('회사클릭');
+    }
 }
 </script>
 

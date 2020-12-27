@@ -14,7 +14,7 @@ export default class CardImg extends Vue {
     imgSrc!: string
 
     private getImgSrc(){
-        return require('@/assets/images/default-card.png')
+        return "https://www.yankodesign.com/images/design_news/2020/12/293769/05_Gromeo_HabitatHorticulture_MiniLivingWallSystem.png"
     }
 
 }
@@ -26,6 +26,5 @@ export default class CardImg extends Vue {
     box-sizing: border-box;
     border-radius: 12px;
     width: 280px;
-    height: 210px;
 }
 </style>

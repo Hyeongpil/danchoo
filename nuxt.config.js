@@ -2,7 +2,6 @@ require('dotenv').config()
 const path = require('path')
 
 module.exports = {
-  mode: 'universal',
   telemetry: false,
   /*
    ** Headers of the page

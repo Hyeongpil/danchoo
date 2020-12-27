@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col">
     <div class="title">{{title}}</div>
-    <div class="flex flex-row flex-wrap">
-      <div v-for="(card, idx) in test" :key="idx" class="w-1/4"> 
+    <div class="grid grid-container">
+      <div v-for="(card, idx) in test" :key="idx"> 
       <card />
     </div>
     </div>
@@ -45,5 +45,10 @@ export default class Main extends Vue {
   font-weight: 700;
   font-size: 36px;
   color: white;
+}
+.grid-container{
+  grid-template-columns: repeat(auto-fill, minmax(280px, 280px));
+  row-gap: 28px;
+  column-gap: 64px;
 }
 </style>

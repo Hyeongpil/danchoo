@@ -30,5 +30,20 @@ export default class DcText extends Vue {
 }
 </script>
 
-<style ${2|scoped,|} lang="scss">
+<style lang="scss" scoped>
+.text-white {
+    color: white;
+}
+.text-grey-text {
+    color: #BEC0C4;
+}
+.font-400{
+    font-weight: 400;
+}
+.text-xs{
+    font-size: 11px;
+}
+.text-lg{
+    font-size: 16px;
+}
 </style>
