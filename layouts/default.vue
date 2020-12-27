@@ -1,6 +1,7 @@
 <template>
   <div class="bg-background h-screen">
-    <navbar-default />
+    <navbar-default class="dan-container"/>
+    <nuxt class="dan-container content-margin"/>
   </div>
 </template>
 
@@ -9,26 +10,19 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 import NavbarDefault from './components/NavbarDefault.vue'
 @Component({
+  name:'DefaultLayout',
   components: {
     NavbarDefault
   }
 })
 export default class DefaultLayout extends Vue {
-  data() {
-    return {
-      items: [
-        {
-          title: 'Home',
-          icon: 'home',
-          to: { name: 'index' }
-        },
-        {
-          title: 'Inspire',
-          icon: 'lightbulb',
-          to: { name: 'inspire' }
-        }
-      ]
-    }
-  }
+
 }
 </script>
+
+<style lang="scss" scoped>
+.content-margin{
+  margin-top: 28px;
+}
+</style>
+

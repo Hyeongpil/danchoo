@@ -39,8 +39,6 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -58,13 +56,43 @@ module.exports = {
   // 미들웨어에 접근인증을 위해 추가
   router: {
     // middleware:
+    extendRoutes (routes, resolve) {
+      routes.push({
+        path: '/ui',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/ux',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/brand',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/graphic',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/marketing',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/media',
+        component: resolve(__dirname, 'pages/index.vue')
+      }),
+      routes.push({
+        path: '/3d',
+        component: resolve(__dirname, 'pages/index.vue')
+      })
+    } 
   },
   proxy: {
-    '/albums': {
-      target: 'https://jsonplaceholder.typicode.com/',
-      secure: false,
-      changeOrigin: true
-    }
+    // '/albums': {
+    //   target: 'https://jsonplaceholder.typicode.com/',
+    //   secure: false,
+    //   changeOrigin: true
+    // }
   },
   dotenv: {
     filename:

@@ -1,24 +1,39 @@
 <template>
-  <section class="section">
-    <h2 class="title is-3 has-text-grey">
-      "Just start <b-icon icon="rocket" size="is-large" />"
-    </h2>
-    <h3 class="subtitle is-6 has-text-grey">
-      Author:
-      <a href="https://github.com/anteriovieira">
-        Antério Vieira
-      </a>
-    </h3>
-  </section>
+  <div>
+    <div class="title">{{title}}</div>
+  </div>
 </template>
 
-<script>
-import { Vue, Component } from 'nuxt-property-decorator'
-import Card from '~/components/UI/card/Card.vue'
-
+<script lang="ts">
+import { Component, Vue, Watch } from "nuxt-property-decorator"
+import { Route } from 'vue-router'
 @Component({
-  name: 'InspirePage',
-  components: { Card }
+  name:'Main'
 })
-export default class Inspire extends Vue {}
+export default class Main extends Vue {
+  private title: string = '전체'
+
+  private titleChange(path: string){
+    if(path === '/') this.title = '전체'
+    if(path === '/ux') this.title = 'UX'
+    if(path === '/ui') this.title = 'UI'
+    if(path === '/brand') this.title = '브랜드'
+    if(path === '/graphic') this.title = '그래픽'
+    if(path === '/marketing') this.title = '마케팅'
+    if(path === '/media') this.title = '영상'
+    if(path === '/3d') this.title = '3D'
+  }
+
+  created() {
+    this.titleChange(this.$route.path)
+  }
+}
 </script>
+
+<style lang="scss" scoped>
+.title{
+  font-weight: 700;
+  font-size: 36px;
+  color: white;
+}
+</style>
