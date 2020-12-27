@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path')
 
 module.exports = {
   mode: 'universal',
@@ -107,6 +108,16 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(_config, _ctx) {}
+    postcss: {
+      plugins: {
+        'postcss-import': {},
+        tailwindcss: path.resolve(__dirname, './tailwind.config.js'),
+        'postcss-nested': {}
+      },
+      preset: {
+        stage: 1
+      }
+    },
+    // extend(_config, _ctx) {}
   }
 }

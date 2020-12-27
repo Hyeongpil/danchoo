@@ -1,6 +1,6 @@
 <template>
   <div class="nav flex flex-row bg-background-light items-center">
-    <img src="@/assets/images/logo.png" class="logo-img cursor-pointer" @click="onLogoClicked()"/>
+    <img src="~/assets/images/logo.png" class="logo-img cursor-pointer" @click="onLogoClicked()"/>
       <nav-title class="nav-margin" title="전체" :selected="nowSelected('전체')" @click.native="onNavClicked('전체')"/>
       <nav-title class="nav-margin" title="UX" :selected="nowSelected('UX')" @click.native="onNavClicked('UX')"/>
       <nav-title class="nav-margin" title="UI" :selected="nowSelected('UI')" @click.native="onNavClicked('UI')"/>
