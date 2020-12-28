@@ -1,49 +1,48 @@
 <template>
   <span :class="getTextClass()">
-      {{ content }}
+    {{ content }}
   </span>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator"
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component({
-    name: 'DcText'
+  name: 'DcText'
 })
 export default class DcText extends Vue {
+  @Prop({ required: true, default: '' })
+  content!: string
 
-    @Prop({ required: true, default: '' })
-    content!: string
+  @Prop({ required: false, default: 'base' })
+  size!: string
 
-    @Prop({ required: false, default: 'base' })
-    size!: string
+  @Prop({ required: false, default: 'white' })
+  color!: string
 
-    @Prop({ required: false, default: 'white' })
-    color!: string
+  @Prop({ required: false, default: '400' })
+  weight!: string
 
-    @Prop({ required: false, default: '400' })
-    weight!: string
-
-    private getTextClass(){
-        return `text-${this.size} text-${this.color} font-${this.weight}`
-    }
+  private getTextClass() {
+    return `text-${this.size} text-${this.color} font-${this.weight}`
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .text-white {
-    color: white;
+  color: white;
 }
 .text-grey-text {
-    color: #BEC0C4;
+  color: #bec0c4;
 }
-.font-400{
-    font-weight: 400;
+.font-400 {
+  font-weight: 400;
 }
-.text-xs{
-    font-size: 11px;
+.text-xs {
+  font-size: 11px;
 }
-.text-lg{
-    font-size: 16px;
+.text-lg {
+  font-size: 16px;
 }
 </style>

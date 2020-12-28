@@ -13,5 +13,5 @@
   "scss.validate": false,
   "stylelint.enable": true,
 
-  "nuxt-typescript-snippets.enable": true
+  "nuxt-typescript-snippets.enable": true,
 }

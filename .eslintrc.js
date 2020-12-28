@@ -11,6 +11,9 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended'
   ],
+  parserOptions: {
+    ecmaVersion: 2020
+  },
   plugins: [
     'prettier'
   ],
@@ -23,8 +26,6 @@ module.exports = {
           endOfLine: 'auto',
       },
     ],
-    "vue/comment-directive": ["error", {
-      "reportUnusedDisableDirectives": false
-    }]
+    "vue/comment-directive": 0
   }
 }

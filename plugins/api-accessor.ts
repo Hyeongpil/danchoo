@@ -2,7 +2,8 @@
 import { Plugin, Context } from '@nuxt/types'
 import createRepository, { IRepositorys } from '~/apis/repository'
 
-let repositories: IRepositorys
+let repositories: any
+
 declare module 'vue/types/vue' {
   interface Vue {
     $repositories: IRepositorys
