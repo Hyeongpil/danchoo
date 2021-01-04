@@ -56,36 +56,38 @@ module.exports = {
   // 미들웨어에 접근인증을 위해 추가
   router: {
     // middleware:
-    extendRoutes (routes, resolve) {
+    extendRoutes(routes, resolve) {
+      // eslint-disable-next-line no-unused-expressions
       routes.push({
         path: '/ui',
         component: resolve(__dirname, 'pages/index.vue')
+        // eslint-disable-next-line no-sequences
       }),
-      routes.push({
-        path: '/ux',
-        component: resolve(__dirname, 'pages/index.vue')
-      }),
-      routes.push({
-        path: '/brand',
-        component: resolve(__dirname, 'pages/index.vue')
-      }),
-      routes.push({
-        path: '/graphic',
-        component: resolve(__dirname, 'pages/index.vue')
-      }),
-      routes.push({
-        path: '/marketing',
-        component: resolve(__dirname, 'pages/index.vue')
-      }),
-      routes.push({
-        path: '/media',
-        component: resolve(__dirname, 'pages/index.vue')
-      }),
-      routes.push({
-        path: '/3d',
-        component: resolve(__dirname, 'pages/index.vue')
-      })
-    } 
+        routes.push({
+          path: '/ux',
+          component: resolve(__dirname, 'pages/index.vue')
+        }),
+        routes.push({
+          path: '/brand',
+          component: resolve(__dirname, 'pages/index.vue')
+        }),
+        routes.push({
+          path: '/graphic',
+          component: resolve(__dirname, 'pages/index.vue')
+        }),
+        routes.push({
+          path: '/marketing',
+          component: resolve(__dirname, 'pages/index.vue')
+        }),
+        routes.push({
+          path: '/media',
+          component: resolve(__dirname, 'pages/index.vue')
+        }),
+        routes.push({
+          path: '/3d',
+          component: resolve(__dirname, 'pages/index.vue')
+        })
+    }
   },
   proxy: {
     // '/albums': {
@@ -96,9 +98,7 @@ module.exports = {
   },
   dotenv: {
     filename:
-      process.env.NODE_ENV === 'production'
-        ? '.env'
-        : '.env.' + process.env.NODE_ENV
+      process.env.NODE_ENV === 'production' ? '.env' : '.env.' + process.env.NODE_ENV
   },
   /*
    ** Build configuration
@@ -116,7 +116,7 @@ module.exports = {
       preset: {
         stage: 1
       }
-    },
+    }
     // extend(_config, _ctx) {}
   }
 }

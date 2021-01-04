@@ -8,7 +8,11 @@ export default class CompanyRepository {
     this.$axios = $axios
   }
 
-  all() {
-    return this.$axios.get(`${this.resource}`)
+  public getCompany1() {
+    return this.$axios.get('companies/1')
+  }
+
+  public getCompany2() {
+    return this.$axios.get('companies/2')
   }
 }

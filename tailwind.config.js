@@ -70,9 +70,10 @@ module.exports = {
       'grey-text': '#BEC0C4',
       'grey-chip': '#383A3E',
       'grey-chip-text': '#C0C2C6',
+      'grey-icon': '#C8C9CA',
       background: '#1C1E21',
       'background-light': '#222427',
-      primary: '#414fff',
+      primary: '#414fff'
     },
 
     /*
@@ -170,14 +171,7 @@ module.exports = {
         'Georgia',
         'serif'
       ],
-      mono: [
-        'Menlo',
-        'Monaco',
-        'Consolas',
-        'Liberation Mono',
-        'Courier New',
-        'monospace'
-      ]
+      mono: ['Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
     },
 
     /*
@@ -201,7 +195,7 @@ module.exports = {
 
     fontSize: {
       xxs: '10px',
-      xs: '11px', 
+      xs: '11px',
       sm: '13px',
       base: '14px',
       lg: '16px',
@@ -691,8 +685,7 @@ module.exports = {
       md: '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
       lg: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)',
       inner: 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
-      xl:
-        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       outline: '0 0 0 3px rgba(52,144,220,0.5)',
       none: 'none',

@@ -1,32 +1,41 @@
 <template>
   <div>
-    어드민
-
-    <input
-      id="input-info-image"
-      ref="fileInput"
-      type="file"
-      @change="fileUploaded($event)"
-    />
-    <!-- <client-only>
-        <ag-grid-vue style="width: 500px; height: 500px;"
-        class="ag-theme-alpine"
-        :columnDefs="columnDefs"
-        :rowData="rowData">
-    </ag-grid-vue>
-    </client-only> -->
+    <dc-text content="관리자 메인" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-// import { AgGridVue } from 'ag-grid-vue'
+import DcText from '~/components/atoms/DcText.vue'
 
 @Component({
-  name: 'Admin'
-  // components:{ AgGridVue }
+  name: 'Admin',
+  layout: 'admin',
+  components: { DcText }
 })
 export default class Admin extends Vue {
+  private onClicked1() {
+    this.$repositories.company
+      .getCompany1()
+      .then((res) => {
+        console.log('res :', res)
+      })
+      .catch((err) => {
+        console.log('err: ', err)
+      })
+  }
+
+  private onClicked2() {
+    this.$repositories.company
+      .getCompany2()
+      .then((res) => {
+        console.log('res :', res)
+      })
+      .catch((err) => {
+        console.log('err: ', err)
+      })
+  }
+
   private fileUploaded(event: any) {
     const formFile = new FormData()
     formFile.append('file', event.target.files[0], event.target.files[0].name)

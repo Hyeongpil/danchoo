@@ -55,11 +55,6 @@
         @click.native="onNavClicked('3D')"
       />
     </div>
-    <nav-title
-      title="관리자"
-      :selected="nowSelected('관리자')"
-      @click.native="onAdminClicked()"
-    />
   </div>
 </template>
 
@@ -93,10 +88,6 @@ export default class NavbarDefault extends Vue {
   private onNavClicked(title: string) {
     this.routerPush(title)
     this.selected = title
-  }
-
-  private onAdminClicked() {
-    this.$router.push('/admin')
   }
 
   private routerPush(title: string) {
