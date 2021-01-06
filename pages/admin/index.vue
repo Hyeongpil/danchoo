@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import DcText from '~/components/atoms/DcText.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
 
 @Component({
   name: 'Admin',

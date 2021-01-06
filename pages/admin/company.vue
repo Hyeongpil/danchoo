@@ -1,4 +1,4 @@
-co<template>
+<template>
   <div class="flex flex-col">
     <div class="flex flex-row items-center mb-5">
       <dc-text content="회사 등록" size="2xl" class="font-bold" />
@@ -9,7 +9,8 @@ co<template>
       />
     </div>
 
-    <dc-text content="등록 성공" size="xl" class="font-bold mb-2" />
+    <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
+
     <no-ssr>
       <dc-ag-grid />
     </no-ssr>
@@ -26,16 +27,19 @@ co<template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import DcAgGrid from '~/components/atoms/DcAgGrid.vue'
-import DcIcon from '~/components/atoms/DcIcon.vue'
-import DcText from '~/components/atoms/DcText.vue'
+import DcAgGrid from '~/components/atoms/ag-grid/DcAgGrid.vue'
+import DcIcon from '~/components/atoms/icon/DcIcon.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
+import AdminFileTab from '~/components/molecules/admin-file-tab/AdminFileTab.vue'
+
 @Component({
   name: 'AdminFile',
   layout: 'admin',
   components: {
     DcAgGrid,
     DcText,
-    DcIcon
+    DcIcon,
+    AdminFileTab
   }
 })
 export default class AdminFile extends Vue {
@@ -50,6 +54,10 @@ export default class AdminFile extends Vue {
       .catch((err) => {
         console.log('err :', err)
       })
+  }
+
+  private handleTab(tab: any) {
+    console.log('tab :', tab)
   }
 }
 </script>

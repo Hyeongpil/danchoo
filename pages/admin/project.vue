@@ -15,6 +15,19 @@
       <dc-ag-grid />
     </no-ssr>
 
+    <div class="mt-10">
+      <dc-text content="개별 프로젝트 등록" size="xl" class="font-bold" />
+      <dc-form @onSubmit="onSubmit">
+        <dc-form-item name="프로젝트 이름" rules="required">
+          <label-input v-model="project" content="프로젝트 이름" class="mt-5" />
+        </dc-form-item>
+        <label-slot content="카테고리 선택">
+          <dc-select />
+        </label-slot>
+        <dc-button type="submit" text="등록" />
+      </dc-form>
+    </div>
+
     <input
       id="input-info-image"
       ref="fileInput"
@@ -27,10 +40,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import DcAgGrid from '~/components/atoms/DcAgGrid.vue'
-import DcIcon from '~/components/atoms/DcIcon.vue'
-import DcText from '~/components/atoms/DcText.vue'
-import AdminFileTab from '~/components/molecules/AdminFileTab.vue'
+import DcAgGrid from '~/components/atoms/ag-grid/DcAgGrid.vue'
+import DcButton from '~/components/atoms/button/DcButton.vue'
+import DcFormItem from '~/components/atoms/form-item/DcFormItem.vue'
+import DcForm from '~/components/atoms/form/DcForm.vue'
+import DcIcon from '~/components/atoms/icon/DcIcon.vue'
+import DcSelect from '~/components/atoms/select/DcSelect.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
+import AdminFileTab from '~/components/molecules/admin-file-tab/AdminFileTab.vue'
+import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
+import LabelSlot from '~/components/molecules/label-slot/LabelSlot.vue'
 
 @Component({
   name: 'AdminFile',
@@ -39,10 +58,18 @@ import AdminFileTab from '~/components/molecules/AdminFileTab.vue'
     DcAgGrid,
     DcText,
     DcIcon,
-    AdminFileTab
+    AdminFileTab,
+    LabelInput,
+    DcForm,
+    DcFormItem,
+    DcSelect,
+    LabelSlot,
+    DcButton
   }
 })
 export default class AdminFile extends Vue {
+  private project = ''
+
   private fileUploaded(event: any) {
     const formFile = new FormData()
     formFile.append('file', event.target.files[0], event.target.files[0].name)
@@ -58,6 +85,10 @@ export default class AdminFile extends Vue {
 
   private handleTab(tab: any) {
     console.log('tab :', tab)
+  }
+
+  private onSubmit() {
+    console.log('project :', this.project)
   }
 }
 </script>

@@ -20,9 +20,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import CardImg from '../atoms/CardImg.vue'
-import DcChip from '../atoms/DcChip.vue'
-import DcText from '../atoms/DcText.vue'
+import DcChip from '~/components/atoms/chip/DcChip.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
+import CardImg from '~/components/atoms/card-img/CardImg.vue'
 
 @Component({
   name: 'Card',

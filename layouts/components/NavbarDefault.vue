@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import NavTitle from '~/components/atoms/NavTitle.vue'
+import NavTitle from '~/components/atoms/title/NavTitle.vue'
 @Component({
   name: 'NavbarDefault',
   components: {

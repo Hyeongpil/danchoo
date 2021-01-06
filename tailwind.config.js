@@ -73,7 +73,8 @@ module.exports = {
       'grey-icon': '#C8C9CA',
       background: '#1C1E21',
       'background-light': '#222427',
-      primary: '#414fff'
+      primary: '#414fff',
+      danger: '#F04243'
     },
 
     /*
