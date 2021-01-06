@@ -36,6 +36,9 @@ export default class DcText extends Vue {
 .text-grey-text {
   color: #bec0c4;
 }
+.text-darkgrey {
+  color: #8e9094;
+}
 .font-400 {
   font-weight: 400;
 }
