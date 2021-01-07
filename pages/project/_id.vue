@@ -1,25 +1,17 @@
 <template>
   <div class="flex flex-col">
-    <div class="flex flex-row margin-bottom">
-      <dc-icon
-        icon="chevron-left"
-        class="cursor-pointer ml-3"
-        @click.native="$refs.fileInput.click()"
-      />
+    <div class="flex flex-row margin-bottom items-center">
+      <dc-icon icon="chevron-left" class="cursor-pointer" @click.native="backClicked()" />
       <div class="flex flex-col margin-left">
         <dc-text
-          class="m-text logo-margin"
+          class="m-text cursor-pointer"
           content="플러스엑스"
           size="sm"
           weight="light"
           color="darkgrey"
+          @click.native="companyClicked()"
         />
-        <dc-text
-          class="m-text logo-margin"
-          content="kakaopage 리뉴얼"
-          size="2xl"
-          weight="medium"
-        />
+        <dc-text class="m-text" content="kakaopage 리뉴얼" size="2xl" weight="medium" />
       </div>
     </div>
 
@@ -31,14 +23,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import DcIcon from '~/components/atoms/DcIcon.vue'
-import DcText from '~/components/atoms/DcText.vue'
+import DcIcon from '~/components/atoms/icon/DcIcon.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
 
 @Component({
   name: 'Project',
   components: { DcIcon, DcText }
 })
-export default class Project extends Vue {}
+export default class Project extends Vue {
+  private backClicked() {
+    this.$router.push('/')
+  }
+
+  private companyClicked() {
+    this.$router.push('/company/1')
+  }
+}
 </script>
 
 <style ${2|scoped,|} lang="scss">

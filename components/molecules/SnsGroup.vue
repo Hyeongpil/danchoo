@@ -1,66 +1,66 @@
 <template>
   <div class="flex flex-row">
     <dc-text
-      class="m-textcursor-pointer"
+      class="m-text cursor-pointer"
       content="Facebook"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="|"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="Instagram"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="|"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="Medium"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="|"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="Brunch"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="|"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
     <dc-text
-      class="m-textcursor-pointer text-margin"
+      class="m-text cursor-pointer text-margin"
       content="Behance"
-      size="2xs"
-      weight="light"
+      size="xs"
+      weight="500"
       color="darkgrey"
     />
   </div>
@@ -68,7 +68,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import DcText from '../atoms/DcText.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
 
 @Component({
   name: 'SnsGroup',

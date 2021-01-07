@@ -1,27 +1,28 @@
 <template>
   <div class="flex flex-row">
     <!-- <dc-bullet :img-src="imgSrc"></dc-bullet> -->
-    <dc-text
-      class="m-text icon-margin"
-      :content="bulletText"
-      size="base"
-      weight="medium"
-    />
-    <dc-text class="m-text icon-margin" content="100명이상" size="base" weight="medium" />
+    <div class="w-5">
+      <dc-text class="m-text" :content="bulletText" size="lg" weight="medium" />
+    </div>
+
+    <dc-text class="m-text icon-margin" :content="content" size="base" weight="medium" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import DcText from '../atoms/DcText.vue'
+import DcText from '~/components/atoms/text/DcText.vue'
 
 @Component({
   name: 'CompanyInfo',
   components: { DcText }
 })
 export default class CompanyInfo extends Vue {
-  @Prop({ required: false, default: '' })
+  @Prop({ required: true, default: '' })
   bulletText!: string
+
+  @Prop({ required: true, default: '' })
+  content!: string
 }
 </script>
 
