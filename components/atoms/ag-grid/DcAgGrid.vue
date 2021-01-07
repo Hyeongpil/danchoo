@@ -10,8 +10,9 @@
   </no-ssr>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { AgGridVue } from 'ag-grid-vue'
+import { ICompany } from '~/types/company.interface'
 
 @Component({
   name: 'DcAgGrid',
@@ -20,21 +21,21 @@ import { AgGridVue } from 'ag-grid-vue'
   }
 })
 export default class DcAgGrid extends Vue {
-  columnDefs: any = [
-    { headerName: '회사명', field: 'company' },
-    { headerName: '홈페이지', field: 'homepage' },
-    { headerName: '파트너', field: 'partners' }
-  ]
+  @Prop({ required: true })
+  private rowData: ICompany[] = []
 
-  rowData: any = [
-    {
-      company: '롯데정보통신',
-      homepage: 'https://www.ldcc.co.kr',
-      partners: `그린카,현대정보통신`
-    },
-    { company: '그린카', homepage: 'https://www.ldcc.co.kr', partners: '피리정보통신' },
-    { company: '카카오', homepage: 'https://www.ldcc.co.kr', partners: '' }
-  ]
+  @Prop({ required: true })
+  private columnDefs: any = []
+
+  // rowData: any = [
+  //   {
+  //     company: '롯데정보통신',
+  //     homepage: 'https://www.ldcc.co.kr',
+  //     partners: `그린카,현대정보통신`
+  //   },
+  //   { company: '그린카', homepage: 'https://www.ldcc.co.kr', partners: '피리정보통신' },
+  //   { company: '카카오', homepage: 'https://www.ldcc.co.kr', partners: '' }
+  // ]
 
   defaultColDef: {} = {
     editable: true

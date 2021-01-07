@@ -7,12 +7,8 @@ export default class CompanyRepository {
     this.$axios = $axios
   }
 
-  public getCompany1() {
-    return this.$axios.get('companies/1')
-  }
-
-  public getCompany2() {
-    return this.$axios.get('companies/2')
+  public getCompanies() {
+    return this.$axios.get('companies?page=0&size=10')
   }
 
   public setCompany(payload: ICompany): Promise<any> {

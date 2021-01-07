@@ -8,6 +8,10 @@ export default class ProjectRepository {
     this.$axios = $axios
   }
 
+  public getProjects() {
+    return this.$axios.get('projects?page=0&size=10')
+  }
+
   public setProject(payload: IProject): Promise<any> {
     return this.$axios.post('projects', payload)
   }

@@ -12,7 +12,7 @@
     <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
 
     <no-ssr>
-      <dc-ag-grid />
+      <dc-ag-grid :row-data.sync="getProjectList" :column-defs="columnDefs" />
     </no-ssr>
 
     <div class="mt-10">
@@ -99,6 +99,40 @@ export default class AdminFile extends Vue {
   private thumbnailImageUrl = ''
   private imageUrls = []
 
+  private projectList = []
+
+  get getProjectList() {
+    return this.projectList
+  }
+
+  private columnDefs: any = [
+    { headerName: '프로젝트 이름', field: 'projectName' },
+    { headerName: '회사명', field: 'companyName' },
+    { headerName: '카테고리', field: 'categoryType' },
+    { headerName: '회사 유형', field: 'industryType' }
+  ]
+
+  created() {
+    this.fetchProject()
+  }
+
+  private fetchProject() {
+    this.$repositories.project
+      .getProjects()
+      .then((res) => {
+        console.log('res :', res)
+        this.projectList = res.data.content
+      })
+      .catch((err) => {
+        Toastify({
+          text: err.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
+      })
+  }
+
   private fileUploaded(event: any) {
     const formFile = new FormData()
     formFile.append('file', event.target.files[0], event.target.files[0].name)
@@ -130,7 +164,13 @@ export default class AdminFile extends Vue {
     this.$repositories.project
       .setProject(project)
       .then((res) => {
-        console.log('res :', res)
+        this.fetchProject()
+        Toastify({
+          text: '프로젝트가 등록되었습니다.',
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
       })
       .catch((err) => {
         console.log('err :', err)

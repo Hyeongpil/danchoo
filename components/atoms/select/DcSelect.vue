@@ -1,7 +1,7 @@
 <template>
   <select v-model="value" name="category" @change="onSelectChanged">
     <option value="">카테고리 선택</option>
-    <option>UI</option>
+    <option>UI_UX</option>
   </select>
 </template>
 

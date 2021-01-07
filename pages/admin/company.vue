@@ -12,7 +12,7 @@
     <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
 
     <no-ssr>
-      <dc-ag-grid />
+      <dc-ag-grid :row-data.sync="getCompanyList" :column-defs="columnDefs" />
     </no-ssr>
 
     <div class="mt-10">
@@ -85,6 +85,38 @@ export default class AdminFile extends Vue {
   private instagram = ''
   private homepageUrl = ''
   private snsLinks = []
+  private companyList = []
+
+  private columnDefs: any = [
+    { headerName: '회사명', field: 'companyName' },
+    { headerName: '홈페이지', field: 'homepageUrl' },
+    { headerName: '파트너', field: 'partners' }
+  ]
+
+  get getCompanyList() {
+    return this.companyList
+  }
+
+  created() {
+    this.fetchCompany()
+  }
+
+  private fetchCompany() {
+    this.$repositories.company
+      .getCompanies()
+      .then((res) => {
+        console.log('res :', res)
+        this.companyList = res.data.content
+      })
+      .catch((err) => {
+        Toastify({
+          text: err.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
+      })
+  }
 
   private fileUploaded(event: any) {
     const formFile = new FormData()
@@ -114,9 +146,16 @@ export default class AdminFile extends Vue {
     this.$repositories.company
       .setCompany(company)
       .then((res) => {
-        console.log('res :', res)
+        this.fetchCompany()
+        Toastify({
+          text: '등록되었습니다.',
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
       })
       .catch((err) => {
+        console.log('err :', err.data)
         Toastify({
           text: err.message,
           duration: 3000,
