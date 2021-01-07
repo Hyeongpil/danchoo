@@ -17,13 +17,34 @@
 
     <div class="mt-10">
       <dc-text content="개별 프로젝트 등록" size="xl" class="font-bold" />
-      <dc-form @onSubmit="onSubmit">
+      <dc-form class="mt-5" @onSubmit="onSubmit">
         <dc-form-item name="프로젝트 이름" rules="required">
-          <label-input v-model="project" content="프로젝트 이름" class="mt-5" />
+          <label-input v-model="project" content="프로젝트 이름" />
         </dc-form-item>
-        <label-slot content="카테고리 선택">
-          <dc-select />
-        </label-slot>
+        <dc-form-item name="카테고리" rules="required">
+          <label-slot content="카테고리">
+            <dc-select v-model="categoryType" />
+          </label-slot>
+        </dc-form-item>
+        <dc-form-item name="클라이언트 스케일 타입" rules="required">
+          <label-input v-model="clientScaleType" content="클라이언트 스케일 타입" />
+        </dc-form-item>
+        <dc-form-item name="회사 유형" rules="required">
+          <label-input v-model="industryType" content="회사 유형" />
+        </dc-form-item>
+
+        <dc-form-item name="회사 이름" rules="required">
+          <label-input v-model="companyName" content="회사 이름" />
+        </dc-form-item>
+
+        <label-input
+          v-model="thumbnailImageUrl"
+          content="썸네일 이미지 URL"
+          class="mb-2"
+        />
+
+        <label-input v-model="imageUrls" content="이미지 URL" class="mb-2" />
+
         <dc-button type="submit" text="등록" />
       </dc-form>
     </div>
@@ -40,6 +61,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Toastify from 'toastify-js'
 import DcAgGrid from '~/components/atoms/ag-grid/DcAgGrid.vue'
 import DcButton from '~/components/atoms/button/DcButton.vue'
 import DcFormItem from '~/components/atoms/form-item/DcFormItem.vue'
@@ -50,6 +72,7 @@ import DcText from '~/components/atoms/text/DcText.vue'
 import AdminFileTab from '~/components/molecules/admin-file-tab/AdminFileTab.vue'
 import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
 import LabelSlot from '~/components/molecules/label-slot/LabelSlot.vue'
+import { IProject } from '~/types/project.interface'
 
 @Component({
   name: 'AdminFile',
@@ -69,6 +92,12 @@ import LabelSlot from '~/components/molecules/label-slot/LabelSlot.vue'
 })
 export default class AdminFile extends Vue {
   private project = ''
+  private categoryType = ''
+  private clientScaleType = ''
+  private companyName = ''
+  private industryType = ''
+  private thumbnailImageUrl = ''
+  private imageUrls = []
 
   private fileUploaded(event: any) {
     const formFile = new FormData()
@@ -88,7 +117,30 @@ export default class AdminFile extends Vue {
   }
 
   private onSubmit() {
-    console.log('project :', this.project)
+    const project: IProject = {
+      projectName: this.project,
+      categoryType: this.categoryType,
+      clientScaleType: this.clientScaleType,
+      companyName: this.companyName,
+      industryType: this.industryType,
+      thumbnailImageUrl: this.thumbnailImageUrl,
+      imageUrls: this.imageUrls
+    }
+
+    this.$repositories.project
+      .setProject(project)
+      .then((res) => {
+        console.log('res :', res)
+      })
+      .catch((err) => {
+        console.log('err :', err)
+        Toastify({
+          text: err.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
+      })
   }
 }
 </script>

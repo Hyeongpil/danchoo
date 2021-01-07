@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col mb-2 w-full">
+  <div class="flex flex-col mb-2">
     <ValidationProvider v-slot="{ validate, errors }" :name="name" :rules="rules">
       <div class="flex flex-col">
         <slot :validate="validate"></slot>

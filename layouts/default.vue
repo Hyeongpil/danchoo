@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-background h-screen pb-5">
+  <div>
     <navbar-default class="dan-container" />
     <nuxt class="dan-container content-margin" />
   </div>

@@ -1,8 +1,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import { ICompany } from '~/types/company.interface'
 export default class CompanyRepository {
   private $axios: NuxtAxiosInstance
-
-  private resource: string = '/posts'
 
   constructor($axios: NuxtAxiosInstance) {
     this.$axios = $axios
@@ -14,5 +13,9 @@ export default class CompanyRepository {
 
   public getCompany2() {
     return this.$axios.get('companies/2')
+  }
+
+  public setCompany(payload: ICompany): Promise<any> {
+    return this.$axios.post('companies', payload)
   }
 }
