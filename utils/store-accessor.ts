@@ -3,12 +3,12 @@
 
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import postModule from '~/store/postModule'
+import adminModule from '~/store/adminModule'
 
-let postStore: postModule
+let adminStore: adminModule
 
 function initialiseStores(store: Store<any>): void {
-  postStore = getModule(postModule, store)
+  adminStore = getModule(adminModule, store)
 }
 
-export { initialiseStores, postStore }
+export { initialiseStores, adminStore }

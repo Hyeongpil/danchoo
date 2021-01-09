@@ -11,7 +11,8 @@ import DcText from '~/components/atoms/text/DcText.vue'
 @Component({
   name: 'Admin',
   layout: 'admin',
-  components: { DcText }
+  components: { DcText },
+  middleware: 'isLogin'
 })
 export default class Admin extends Vue {}
 </script>

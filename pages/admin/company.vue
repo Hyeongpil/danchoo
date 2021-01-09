@@ -74,7 +74,8 @@ import { ICompany } from '~/types/company.interface'
     DcFormItem,
     DcForm,
     LabelInput
-  }
+  },
+  middleware: 'isLogin'
 })
 export default class AdminFile extends Vue {
   private companyName = ''

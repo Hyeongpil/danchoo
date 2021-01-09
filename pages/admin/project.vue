@@ -88,7 +88,8 @@ import { IProject } from '~/types/project.interface'
     DcSelect,
     LabelSlot,
     DcButton
-  }
+  },
+  middleware: 'isLogin'
 })
 export default class AdminFile extends Vue {
   private project = ''

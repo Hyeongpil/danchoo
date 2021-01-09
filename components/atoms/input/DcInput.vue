@@ -3,6 +3,7 @@
     v-model="inputVal"
     :type="type"
     :readonly="readonly"
+    :placeholder="placeHolder"
     @input="handleInput"
     @focus="handleFocus"
     @blur="handleBlur"
@@ -22,6 +23,9 @@ export default class DcInput extends Vue {
 
   @Prop({ default: 'text' })
   private type!: string
+
+  @Prop()
+  private placeHolder!: string
 
   @Prop({ default: false })
   private readonly!: boolean

@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <ValidationObserver v-slot="validate">
-      <form
-        @submit.prevent="validate.handleSubmit(onSubmit(validate))"
-        @reset.prevent="reset"
-      >
-        <slot />
-      </form>
-    </ValidationObserver>
-  </div>
+  <ValidationObserver v-slot="validate">
+    <form
+      @submit.prevent="validate.handleSubmit(onSubmit(validate))"
+      @reset.prevent="reset"
+    >
+      <slot />
+    </form>
+  </ValidationObserver>
 </template>
 
 <script lang="ts">
