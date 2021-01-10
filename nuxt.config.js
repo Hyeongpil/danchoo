@@ -109,7 +109,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    transpile: ['vee-validate/dist/rules'],
+    transpile: ['vee-validate/dist/rules', 'ag-grid-vue'],
     /*
      ** You can extend webpack config here
      */

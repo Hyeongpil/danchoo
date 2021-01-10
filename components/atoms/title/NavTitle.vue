@@ -12,7 +12,7 @@ export default class NavTitle extends Vue {
   @Prop({ required: true, default: '' })
   title!: string
 
-  @PropSync('selected', { required: true, default: false })
+  @PropSync('selected', { default: false })
   syncSelected!: boolean
 
   private getColor() {

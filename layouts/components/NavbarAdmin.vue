@@ -25,12 +25,20 @@
         @click.native="onNavClicked('회사등록')"
       />
     </div>
+    <nav-title
+      v-if="isLogin"
+      class="nav-margin"
+      title="로그아웃"
+      @click.native="onLogoutClicked()"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Toastify from 'toastify-js'
 import NavTitle from '~/components/atoms/title/NavTitle.vue'
+import { adminStore } from '~/store'
 @Component({
   name: 'NavbarAdmin',
   components: {
@@ -68,6 +76,21 @@ export default class NavbarAdmin extends Vue {
   private onLogoClicked() {
     this.selected = '전체'
     this.$router.push('/')
+  }
+
+  private onLogoutClicked() {
+    Toastify({
+      text: '로그아웃 되었습니다.',
+      duration: 3000,
+      gravity: 'top', // `top` or `bottom`
+      position: 'right' // `left`, `center` or `right`
+    }).showToast()
+    adminStore.INIT()
+    this.$router.push('/')
+  }
+
+  get isLogin() {
+    return adminStore.accessToken !== ''
   }
 }
 </script>

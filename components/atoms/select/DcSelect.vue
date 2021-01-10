@@ -1,18 +1,24 @@
 <template>
   <select v-model="value" name="category" @change="onSelectChanged">
-    <option value="">카테고리 선택</option>
-    <option>UI_UX</option>
+    <option value="NONE">미지정</option>
+    <option v-for="(option, idx) in options" :key="idx" :value="option.key">{{
+      option.value
+    }}</option>
   </select>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ISelectOption } from '~/types/type.interface'
 
 @Component({
   name: 'DcSelect'
 })
 export default class DcSelect extends Vue {
-  private value = ''
+  private value = 'NONE'
+
+  @Prop()
+  private options!: ISelectOption[]
 
   private onSelectChanged(event: any) {
     this.$emit('input', event.target.value)

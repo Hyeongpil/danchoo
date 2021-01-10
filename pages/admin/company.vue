@@ -11,9 +11,9 @@
 
     <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
 
-    <no-ssr>
-      <dc-ag-grid :row-data.sync="getCompanyList" :column-defs="columnDefs" />
-    </no-ssr>
+    <client-only>
+      <dc-ag-grid :row-data.sync="getCompanyList" :column-defs.sync="nowColumnDef" />
+    </client-only>
 
     <div class="mt-10">
       <dc-text content="개별 회사 등록" size="xl" class="font-bold" />
@@ -63,7 +63,7 @@ import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
 import { ICompany } from '~/types/company.interface'
 
 @Component({
-  name: 'AdminFile',
+  name: 'Company',
   layout: 'admin',
   components: {
     DcAgGrid,
@@ -77,9 +77,9 @@ import { ICompany } from '~/types/company.interface'
   },
   middleware: 'isLogin'
 })
-export default class AdminFile extends Vue {
+export default class Company extends Vue {
   private companyName = ''
-  private partners = []
+  private partners = ''
   private brunch = ''
   private behance = ''
   private medium = ''
@@ -88,11 +88,32 @@ export default class AdminFile extends Vue {
   private snsLinks = []
   private companyList = []
 
-  private columnDefs: any = [
+  private successColumnDefs: any[] = [
     { headerName: '회사명', field: 'companyName' },
     { headerName: '홈페이지', field: 'homepageUrl' },
-    { headerName: '파트너', field: 'partners' }
+    { headerName: '파트너', field: 'partners' },
+    { headerName: '인스타그램', field: 'INSTAGRAM', valueGetter: 'data.snsLinks.type' }
   ]
+
+  private failColumnDefs: any[] = [
+    { headerName: '회사명', field: 'companyName', editable: true },
+    { headerName: '홈페이지', field: 'homepageUrl', editable: true },
+    { headerName: '파트너', field: 'partners', editable: true },
+    {
+      headerName: '재요청',
+      cellRenderer: (params: any) => {
+        const buttonElem = document.createElement('BUTTON')
+        buttonElem.innerHTML = '다시 등록하기'
+        buttonElem.addEventListener('click', () => {
+          this.setCompany(params.data, params.data.id)
+        })
+
+        return buttonElem
+      }
+    }
+  ]
+
+  private nowColumnDef: any[] = this.successColumnDefs
 
   get getCompanyList() {
     return this.companyList
@@ -111,7 +132,24 @@ export default class AdminFile extends Vue {
       })
       .catch((err) => {
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
+      })
+  }
+
+  private fetchFailCompany() {
+    this.$repositories.company
+      .getFailCompanies()
+      .then((res) => {
+        console.log('res :', res)
+        this.companyList = res.data.content
+      })
+      .catch((err) => {
+        Toastify({
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
@@ -132,7 +170,14 @@ export default class AdminFile extends Vue {
       })
   }
 
-  private handleTab(tab: any) {
+  private handleTab(tab: string) {
+    if (tab === 'success') {
+      this.fetchCompany()
+      this.nowColumnDef = this.successColumnDefs
+    } else {
+      this.fetchFailCompany()
+      this.nowColumnDef = this.failColumnDefs
+    }
     console.log('tab :', tab)
   }
 
@@ -140,25 +185,37 @@ export default class AdminFile extends Vue {
     const company: ICompany = {
       companyName: this.companyName,
       homepageUrl: this.homepageUrl,
-      partners: this.partners,
-      snsLinks: this.snsLinks
+      partners: this.partners.split(','),
+      snsLinks: []
+      // snsLinks: this.snsLinks.push({
+      //   type: 'INSTAGRAM',
+      //   endpoint: this.instagram
+      // })
     }
+    this.setCompany(company, '')
+  }
 
+  private setCompany(company: ICompany, id: string) {
     this.$repositories.company
       .setCompany(company)
-      .then((res) => {
-        this.fetchCompany()
+      .then(async () => {
         Toastify({
           text: '등록되었습니다.',
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
         }).showToast()
+        // 아이디가 있으면 실패요청 등록
+        if (id) {
+          await this.$repositories.company.delFailRegisterCompanies(id)
+          this.fetchFailCompany()
+        } else {
+          this.fetchCompany()
+        }
       })
       .catch((err) => {
-        console.log('err :', err.data)
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`

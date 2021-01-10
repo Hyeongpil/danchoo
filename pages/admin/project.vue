@@ -11,9 +11,9 @@
 
     <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
 
-    <no-ssr>
+    <client-only>
       <dc-ag-grid :row-data.sync="getProjectList" :column-defs="columnDefs" />
-    </no-ssr>
+    </client-only>
 
     <div class="mt-10">
       <dc-text content="개별 프로젝트 등록" size="xl" class="font-bold" />
@@ -23,14 +23,18 @@
         </dc-form-item>
         <dc-form-item name="카테고리" rules="required">
           <label-slot content="카테고리">
-            <dc-select v-model="categoryType" />
+            <dc-select v-model="categoryType" :options="categoryOptions" />
           </label-slot>
         </dc-form-item>
-        <dc-form-item name="클라이언트 스케일 타입" rules="required">
-          <label-input v-model="clientScaleType" content="클라이언트 스케일 타입" />
+        <dc-form-item name="회사 규모" rules="required">
+          <label-slot content="회사 규모">
+            <dc-select v-model="clientScaleType" :options="clientScaleTypeOptions" />
+          </label-slot>
         </dc-form-item>
         <dc-form-item name="회사 유형" rules="required">
-          <label-input v-model="industryType" content="회사 유형" />
+          <label-slot content="회사 유형">
+            <dc-select v-model="industryType" :options="industryTypeOptions" />
+          </label-slot>
         </dc-form-item>
 
         <dc-form-item name="회사 이름" rules="required">
@@ -73,6 +77,7 @@ import AdminFileTab from '~/components/molecules/admin-file-tab/AdminFileTab.vue
 import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
 import LabelSlot from '~/components/molecules/label-slot/LabelSlot.vue'
 import { IProject } from '~/types/project.interface'
+import { IColumnDef, ISelectOption } from '~/types/type.interface'
 
 @Component({
   name: 'AdminFile',
@@ -99,19 +104,41 @@ export default class AdminFile extends Vue {
   private industryType = ''
   private thumbnailImageUrl = ''
   private imageUrls = []
-
   private projectList = []
+  private nowFilter = 'success'
 
-  get getProjectList() {
-    return this.projectList
-  }
-
-  private columnDefs: any = [
+  private columnDefs: IColumnDef[] = [
     { headerName: '프로젝트 이름', field: 'projectName' },
     { headerName: '회사명', field: 'companyName' },
     { headerName: '카테고리', field: 'categoryType' },
     { headerName: '회사 유형', field: 'industryType' }
   ]
+
+  private categoryOptions: ISelectOption[] = [
+    { key: 'UI_UX', value: 'UI_UX' },
+    { key: 'UX_RESEARCH', value: 'UX리서치' },
+    { key: 'BRANDING', value: '브랜딩' },
+    { key: 'VIDEO', value: '영상' },
+    { key: 'THREE_D', value: '3D' },
+    { key: 'MARKETING', value: '마케팅' },
+    { key: 'GRAPHIC', value: '그래픽' }
+  ]
+
+  private clientScaleTypeOptions: ISelectOption[] = [
+    { key: 'MAJOR_COMPANY', value: '대기업' },
+    { key: 'MIDDLE_COMPANY', value: '중견기업' },
+    { key: 'SMALL_COMPANY', value: '중소기업' },
+    { key: 'START_UP', value: '스타트업' }
+  ]
+
+  private industryTypeOptions: ISelectOption[] = [
+    { key: 'BLOCK_CHAIN', value: '블록체인' },
+    { key: 'COSMETIC', value: '화장품' }
+  ]
+
+  get getProjectList() {
+    return this.projectList
+  }
 
   created() {
     this.fetchProject()
@@ -126,7 +153,24 @@ export default class AdminFile extends Vue {
       })
       .catch((err) => {
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'right' // `left`, `center` or `right`
+        }).showToast()
+      })
+  }
+
+  private fetchFailProject() {
+    this.$repositories.project
+      .getFailProjects()
+      .then((res) => {
+        console.log('res :', res)
+        this.projectList = res.data.content
+      })
+      .catch((err) => {
+        Toastify({
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
@@ -147,7 +191,12 @@ export default class AdminFile extends Vue {
       })
   }
 
-  private handleTab(tab: any) {
+  private handleTab(tab: string) {
+    if (tab === 'success') {
+      this.fetchProject()
+    } else {
+      this.fetchFailProject()
+    }
     console.log('tab :', tab)
   }
 
@@ -176,7 +225,7 @@ export default class AdminFile extends Vue {
       .catch((err) => {
         console.log('err :', err)
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`

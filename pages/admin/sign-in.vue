@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col justify-center items-center">
     <dc-form @onSubmit="onSubmit">
       <div class="flex flex-col justify-center items-center">
         <dc-text content="로그인" size="2xl" weight="700" />
@@ -17,6 +17,7 @@
         <dc-button text="로그인" class="mt-5" type="submit" />
       </div>
     </dc-form>
+    <dc-button text="회원가입" class="mt-5" @click.native="onSignUpClicked()" />
   </div>
 </template>
 
@@ -61,16 +62,22 @@ export default class SignIn extends Vue {
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
         }).showToast()
+        this.$router.push('/admin')
         console.log('res :', res)
       })
       .catch((err) => {
+        console.log('err: ', err)
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
         }).showToast()
       })
+  }
+
+  private onSignUpClicked() {
+    this.$router.push('/admin/sign-up')
   }
 }
 </script>

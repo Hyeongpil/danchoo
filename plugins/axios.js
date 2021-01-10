@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import https from 'https'
+import { adminStore } from '~/store'
 
 export default (ctx) => {
   ctx.$axios.defaults.baseURL = process.env.BASE_URL
@@ -12,7 +13,8 @@ export default (ctx) => {
 
   //  request에서 기본적으로 로그 찍도록 설정
   ctx.$axios.onRequest((config) => {
-    console.log('Making request to ' + config.url)
+    if (adminStore.accessToken)
+      config.headers.Authorization = `Bearer ${adminStore.accessToken}`
   })
 
   // ctx.$axios.onResponse(async (response) => {

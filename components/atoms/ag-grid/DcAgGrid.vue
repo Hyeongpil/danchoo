@@ -1,16 +1,16 @@
 <template>
-  <no-ssr>
+  <client-only>
     <ag-grid-vue
       style="height: 500px;"
       class="ag-theme-balham-dark w-full"
+      :grid-options="gridOptions"
       :column-defs="columnDefs"
       :row-data="rowData"
-      :default-col-def="defaultColDef"
     ></ag-grid-vue>
-  </no-ssr>
+  </client-only>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { AgGridVue } from 'ag-grid-vue'
 import { ICompany } from '~/types/company.interface'
 
@@ -25,20 +25,30 @@ export default class DcAgGrid extends Vue {
   private rowData: ICompany[] = []
 
   @Prop({ required: true })
-  private columnDefs: any = []
+  private columnDefs: any[] = []
 
-  // rowData: any = [
-  //   {
-  //     company: '롯데정보통신',
-  //     homepage: 'https://www.ldcc.co.kr',
-  //     partners: `그린카,현대정보통신`
-  //   },
-  //   { company: '그린카', homepage: 'https://www.ldcc.co.kr', partners: '피리정보통신' },
-  //   { company: '카카오', homepage: 'https://www.ldcc.co.kr', partners: '' }
-  // ]
+  private gridOptions = {
+    headerHeight: 40,
+    getRowStyle: () => ({
+      // 'text-align': 'center'
+    }),
+    components: {},
+    onGridReady(event: any) {
+      event.api.sizeColumnsToFit()
+    },
+    onSelectionChanged: (event: any) => this.onSelectionChanged(event),
+    overlayLoadingTemplate: '<span class="ag-overlay-loading-center">불러오는 중</span>',
+    overlayNoRowsTemplate:
+      '<span class="ag-overlay-loading-center">데이터가 없습니다.</span>'
+  }
 
-  defaultColDef: {} = {
-    editable: true
+  @Watch('columnDefs')
+  private onColumnChanged() {
+    this.gridOptions.api.refreshCells({ force: true })
+  }
+
+  private onSelectionChanged(event: any) {
+    this.$emit('onSelectionChanged', event)
   }
 }
 </script>

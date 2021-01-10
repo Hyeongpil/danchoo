@@ -16,4 +16,9 @@ export default class AdminModule extends VuexModule {
   public SET_ACCESS_TOKEN(accessToken: string) {
     this.accessToken = accessToken
   }
+
+  @Mutation
+  public INIT() {
+    this.accessToken = ''
+  }
 }

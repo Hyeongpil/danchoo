@@ -68,11 +68,12 @@ export default class SignUp extends Vue {
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
         }).showToast()
+        this.$router.push('/admin/sign-in')
         console.log('res :', res)
       })
       .catch((err) => {
         Toastify({
-          text: err.message,
+          text: err.response.data.message,
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
