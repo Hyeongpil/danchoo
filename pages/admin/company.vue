@@ -55,6 +55,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import Toastify from 'toastify-js'
+import { CellEvent, CellValueChangedEvent } from '@ag-grid-community/all-modules'
 import DcAgGrid from '~/components/atoms/ag-grid/DcAgGrid.vue'
 import DcIcon from '~/components/atoms/icon/DcIcon.vue'
 import DcText from '~/components/atoms/text/DcText.vue'
@@ -100,8 +101,8 @@ export default class Company extends Vue {
     { headerName: '파트너', field: 'partners' },
     {
       headerName: '인스타그램',
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'INSTAGRAM'
         })
         if (sns) return sns.endpoint
@@ -109,8 +110,8 @@ export default class Company extends Vue {
     },
     {
       headerName: '브런치',
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'BRUNCH'
         })
         if (sns) return sns.endpoint
@@ -118,8 +119,8 @@ export default class Company extends Vue {
     },
     {
       headerName: '미디엄',
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'MEDIUM'
         })
         if (sns) return sns.endpoint
@@ -127,8 +128,8 @@ export default class Company extends Vue {
     },
     {
       headerName: 'BEHANCE',
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'BEHANCE'
         })
         if (sns) return sns.endpoint
@@ -139,7 +140,7 @@ export default class Company extends Vue {
   private failColumnDefs: any[] = [
     {
       headerName: '재요청',
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: CellEvent) => {
         const buttonElem = document.createElement('BUTTON')
         buttonElem.innerHTML = '다시 등록하기'
         buttonElem.addEventListener('click', () => {
@@ -155,41 +156,65 @@ export default class Company extends Vue {
     {
       headerName: '인스타그램',
       editable: true,
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'INSTAGRAM'
         })
         if (sns) return sns.endpoint
+      },
+      valueSetter: (event: CellValueChangedEvent) => {
+        const sns = event.data.snsLinks.find((sns: ISnsLink) => {
+          return sns.type === 'INSTAGRAM'
+        })
+        sns.endpoint = event.newValue
       }
     },
     {
       headerName: '브런치',
       editable: true,
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'BRUNCH'
         })
         if (sns) return sns.endpoint
+      },
+      valueSetter: (event: CellValueChangedEvent) => {
+        const sns = event.data.snsLinks.find((sns: ISnsLink) => {
+          return sns.type === 'BRUNCH'
+        })
+        sns.endpoint = event.newValue
       }
     },
     {
       headerName: '미디엄',
       editable: true,
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'MEDIUM'
         })
         if (sns) return sns.endpoint
+      },
+      valueSetter: (event: CellValueChangedEvent) => {
+        const sns = event.data.snsLinks.find((sns: ISnsLink) => {
+          return sns.type === 'MEDIUM'
+        })
+        sns.endpoint = event.newValue
       }
     },
     {
       headerName: 'BEHANCE',
       editable: true,
-      cellRenderer: (params: any) => {
-        const sns = params.data.snsLinks.find((sns: any) => {
+      cellRenderer: (params: CellEvent) => {
+        const sns = params.data.snsLinks.find((sns: ISnsLink) => {
           return sns.type === 'BEHANCE'
         })
         if (sns) return sns.endpoint
+      },
+      valueSetter: (event: CellValueChangedEvent) => {
+        const sns = event.data.snsLinks.find((sns: ISnsLink) => {
+          return sns.type === 'BEHANCE'
+        })
+        sns.endpoint = event.newValue
       }
     }
   ]
@@ -208,7 +233,7 @@ export default class Company extends Vue {
     this.$repositories.company
       .getCompanies()
       .then((res) => {
-        console.log('res :', res)
+        console.log('fetchCompany res :', res)
         this.companyList = res.data.content
       })
       .catch((err) => {
@@ -225,15 +250,15 @@ export default class Company extends Vue {
     this.$repositories.company
       .getFailCompanies()
       .then((res) => {
-        console.log('res :', res)
+        console.log('fetchFailCompany res :', res)
         this.companyList = res.data.content
       })
       .catch((err) => {
         Toastify({
           text: err.response.data.message,
           duration: 3000,
-          gravity: 'top', // `top` or `bottom`
-          position: 'right' // `left`, `center` or `right`
+          gravity: 'top',
+          position: 'right'
         }).showToast()
       })
   }
@@ -243,11 +268,21 @@ export default class Company extends Vue {
     formFile.append('file', event.target.files[0], event.target.files[0].name)
     this.$repositories.file
       .companyFiles(formFile)
-      .then((res) => {
-        console.log('res :', res)
+      .then(() => {
+        Toastify({
+          text: '파일이 업로드 되었습니다.',
+          duration: 3000,
+          gravity: 'top',
+          position: 'right'
+        }).showToast()
       })
       .catch((err) => {
-        console.log('err :', err)
+        Toastify({
+          text: err.response.data.message,
+          duration: 3000,
+          gravity: 'top',
+          position: 'right'
+        }).showToast()
       })
   }
 
@@ -259,7 +294,6 @@ export default class Company extends Vue {
       this.fetchFailCompany()
       this.nowColumnDef = this.failColumnDefs
     }
-    console.log('tab :', tab)
   }
 
   private onSubmit() {
@@ -283,7 +317,6 @@ export default class Company extends Vue {
       companyName: this.companyName,
       homepageUrl: this.homepageUrl,
       partners: this.partners.split(','),
-      // snsLinks: []
       snsLinks: this.snsLinks
     }
     this.setCompany(company, '')
@@ -298,8 +331,8 @@ export default class Company extends Vue {
         Toastify({
           text: '등록되었습니다.',
           duration: 3000,
-          gravity: 'top', // `top` or `bottom`
-          position: 'right' // `left`, `center` or `right`
+          gravity: 'top',
+          position: 'right'
         }).showToast()
         // 아이디가 있으면 실패요청 등록
         if (id) {

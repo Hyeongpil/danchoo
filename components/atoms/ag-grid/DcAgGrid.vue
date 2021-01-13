@@ -12,6 +12,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { AgGridVue } from 'ag-grid-vue'
+import { CellValueChangedEvent, GridOptions } from '@ag-grid-community/all-modules'
 import { ICompany } from '~/types/company.interface'
 
 @Component({
@@ -27,17 +28,23 @@ export default class DcAgGrid extends Vue {
   @Prop({ required: true })
   private columnDefs: any[] = []
 
-  private gridOptions: any = {
+  get getRowData() {
+    return ''
+  }
+
+  private gridOptions: GridOptions = {
     headerHeight: 40,
     getRowStyle: () => ({
       // 'text-align': 'center'
     }),
+    defaultColDef: {
+      resizable: true
+    },
     components: {},
     onGridReady(event: any) {
       event.api.sizeColumnsToFit()
     },
-    resizable: true,
-    onSelectionChanged: (event: any) => this.onSelectionChanged(event),
+    onCellValueChanged: (event: CellValueChangedEvent) => this.onCellValueChanged(event),
     overlayLoadingTemplate: '<span class="ag-overlay-loading-center">불러오는 중</span>',
     overlayNoRowsTemplate:
       '<span class="ag-overlay-loading-center">데이터가 없습니다.</span>'
@@ -48,8 +55,8 @@ export default class DcAgGrid extends Vue {
     this.gridOptions.api.refreshCells({ force: true })
   }
 
-  private onSelectionChanged(event: any) {
-    this.$emit('onSelectionChanged', event)
+  private onCellValueChanged(event: any) {
+    this.$emit('onCellValueChanged', event)
   }
 }
 </script>
