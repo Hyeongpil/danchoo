@@ -77,7 +77,7 @@ import AdminFileTab from '~/components/molecules/admin-file-tab/AdminFileTab.vue
 import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
 import LabelSlot from '~/components/molecules/label-slot/LabelSlot.vue'
 import { IProject } from '~/types/project.interface'
-import { IColumnDef, ISelectOption } from '~/types/type.interface'
+import { ISelectOption } from '~/types/type.interface'
 
 @Component({
   name: 'AdminFile',
@@ -107,7 +107,7 @@ export default class AdminFile extends Vue {
   private projectList = []
   private nowFilter = 'success'
 
-  private columnDefs: IColumnDef[] = [
+  private columnDefs: any[] = [
     { headerName: '프로젝트 이름', field: 'projectName' },
     { headerName: '회사명', field: 'companyName' },
     { headerName: '카테고리', field: 'categoryType' },

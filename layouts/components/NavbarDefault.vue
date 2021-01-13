@@ -7,52 +7,12 @@
         @click="onLogoClicked()"
       />
       <nav-title
+        v-for="(menu, idx) in menuList"
+        :key="idx"
         class="nav-margin"
-        title="전체"
-        :selected="nowSelected('전체')"
-        @click.native="onNavClicked('전체')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="UX"
-        :selected="nowSelected('UX')"
-        @click.native="onNavClicked('UX')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="UI"
-        :selected="nowSelected('UI')"
-        @click.native="onNavClicked('UI')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="브랜드"
-        :selected="nowSelected('브랜드')"
-        @click.native="onNavClicked('브랜드')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="그래픽"
-        :selected="nowSelected('그래픽')"
-        @click.native="onNavClicked('그래픽')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="마케팅"
-        :selected="nowSelected('마케팅')"
-        @click.native="onNavClicked('마케팅')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="영상"
-        :selected="nowSelected('영상')"
-        @click.native="onNavClicked('영상')"
-      />
-      <nav-title
-        class="nav-margin"
-        title="3D"
-        :selected="nowSelected('3D')"
-        @click.native="onNavClicked('3D')"
+        :title="menu"
+        :selected="nowSelected(menu)"
+        @click.native="onNavClicked(menu)"
       />
     </div>
   </div>
@@ -69,6 +29,16 @@ import NavTitle from '~/components/atoms/title/NavTitle.vue'
 })
 export default class NavbarDefault extends Vue {
   private selected: string = '전체'
+  private menuList: string[] = [
+    '전체',
+    'UX',
+    'UI',
+    '브랜드',
+    '그래픽',
+    '마케팅',
+    '영상',
+    '3D'
+  ]
 
   created() {
     this.setSelected(this.$route.path)

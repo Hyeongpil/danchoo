@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col">
+    <div v-if="loading">
+      <dc-loading />
+    </div>
     <div class="flex flex-row items-center mb-5">
       <dc-text content="회사 등록" size="2xl" class="font-bold" />
       <dc-icon
@@ -60,7 +63,8 @@ import DcButton from '~/components/atoms/button/DcButton.vue'
 import DcFormItem from '~/components/atoms/form-item/DcFormItem.vue'
 import DcForm from '~/components/atoms/form/DcForm.vue'
 import LabelInput from '~/components/molecules/label-input/LabelInput.vue'
-import { ICompany } from '~/types/company.interface'
+import { ICompany, ISnsLink } from '~/types/company.interface'
+import DcLoading from '~/components/atoms/loading/DcLoading.vue'
 
 @Component({
   name: 'Company',
@@ -73,7 +77,8 @@ import { ICompany } from '~/types/company.interface'
     DcButton,
     DcFormItem,
     DcForm,
-    LabelInput
+    LabelInput,
+    DcLoading
   },
   middleware: 'isLogin'
 })
@@ -85,20 +90,53 @@ export default class Company extends Vue {
   private medium = ''
   private instagram = ''
   private homepageUrl = ''
-  private snsLinks = []
+  private snsLinks: ISnsLink[] = []
   private companyList = []
+  private loading = false
 
   private successColumnDefs: any[] = [
     { headerName: '회사명', field: 'companyName' },
     { headerName: '홈페이지', field: 'homepageUrl' },
     { headerName: '파트너', field: 'partners' },
-    { headerName: '인스타그램', field: 'INSTAGRAM', valueGetter: 'data.snsLinks.type' }
+    {
+      headerName: '인스타그램',
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'INSTAGRAM'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: '브런치',
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'BRUNCH'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: '미디엄',
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'MEDIUM'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: 'BEHANCE',
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'BEHANCE'
+        })
+        if (sns) return sns.endpoint
+      }
+    }
   ]
 
   private failColumnDefs: any[] = [
-    { headerName: '회사명', field: 'companyName', editable: true },
-    { headerName: '홈페이지', field: 'homepageUrl', editable: true },
-    { headerName: '파트너', field: 'partners', editable: true },
     {
       headerName: '재요청',
       cellRenderer: (params: any) => {
@@ -109,6 +147,49 @@ export default class Company extends Vue {
         })
 
         return buttonElem
+      }
+    },
+    { headerName: '회사명', field: 'companyName', editable: true },
+    { headerName: '홈페이지', field: 'homepageUrl', editable: true },
+    { headerName: '파트너', field: 'partners', editable: true },
+    {
+      headerName: '인스타그램',
+      editable: true,
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'INSTAGRAM'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: '브런치',
+      editable: true,
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'BRUNCH'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: '미디엄',
+      editable: true,
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'MEDIUM'
+        })
+        if (sns) return sns.endpoint
+      }
+    },
+    {
+      headerName: 'BEHANCE',
+      editable: true,
+      cellRenderer: (params: any) => {
+        const sns = params.data.snsLinks.find((sns: any) => {
+          return sns.type === 'BEHANCE'
+        })
+        if (sns) return sns.endpoint
       }
     }
   ]
@@ -182,23 +263,38 @@ export default class Company extends Vue {
   }
 
   private onSubmit() {
+    this.snsLinks.push({
+      type: 'INSTAGRAM',
+      endpoint: this.instagram
+    })
+    this.snsLinks.push({
+      type: 'BRUNCH',
+      endpoint: this.brunch
+    })
+    this.snsLinks.push({
+      type: 'MEDIUM',
+      endpoint: this.medium
+    })
+    this.snsLinks.push({
+      type: 'BEHANCE',
+      endpoint: this.behance
+    })
     const company: ICompany = {
       companyName: this.companyName,
       homepageUrl: this.homepageUrl,
       partners: this.partners.split(','),
-      snsLinks: []
-      // snsLinks: this.snsLinks.push({
-      //   type: 'INSTAGRAM',
-      //   endpoint: this.instagram
-      // })
+      // snsLinks: []
+      snsLinks: this.snsLinks
     }
     this.setCompany(company, '')
   }
 
   private setCompany(company: ICompany, id: string) {
+    this.loading = true
     this.$repositories.company
       .setCompany(company)
       .then(async () => {
+        this.loading = false
         Toastify({
           text: '등록되었습니다.',
           duration: 3000,
@@ -214,6 +310,7 @@ export default class Company extends Vue {
         }
       })
       .catch((err) => {
+        this.loading = false
         Toastify({
           text: err.response.data.message,
           duration: 3000,

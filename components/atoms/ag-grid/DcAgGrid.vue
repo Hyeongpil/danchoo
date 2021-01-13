@@ -27,7 +27,7 @@ export default class DcAgGrid extends Vue {
   @Prop({ required: true })
   private columnDefs: any[] = []
 
-  private gridOptions = {
+  private gridOptions: any = {
     headerHeight: 40,
     getRowStyle: () => ({
       // 'text-align': 'center'
@@ -36,6 +36,7 @@ export default class DcAgGrid extends Vue {
     onGridReady(event: any) {
       event.api.sizeColumnsToFit()
     },
+    resizable: true,
     onSelectionChanged: (event: any) => this.onSelectionChanged(event),
     overlayLoadingTemplate: '<span class="ag-overlay-loading-center">불러오는 중</span>',
     overlayNoRowsTemplate:
