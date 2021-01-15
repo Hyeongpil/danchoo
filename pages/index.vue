@@ -12,11 +12,10 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import Card from '~/components/organisms/card/Card.vue'
-import DcPopup from '~/components/organisms/popup/DcPopup.vue'
 
 @Component({
   name: 'Main',
-  components: { Card, DcPopup }
+  components: { Card }
 })
 export default class Main extends Vue {
   private title: string = '모든 에이전시의 프로젝트를 확인하세요'

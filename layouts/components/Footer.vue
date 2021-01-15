@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-left">
+  <footer>
     <div class="flex flex-row">
       <img src="~/assets/images/logo.png" class="f-logo" />
       <div class="flex flex-col">
