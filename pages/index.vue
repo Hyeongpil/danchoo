@@ -12,17 +12,71 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import Card from '~/components/organisms/card/Card.vue'
+import DcPopup from '~/components/organisms/popup/DcPopup.vue'
 
 @Component({
   name: 'Main',
-  components: { Card }
+  components: { Card, DcPopup }
 })
 export default class Main extends Vue {
-  private title: string = '전체'
-  private test: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  private title: string = '모든 에이전시의 프로젝트를 확인하세요'
+  private test: number[] = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ]
+
+  private isPopup = false
 
   private titleChange(path: string) {
-    if (path === '/') this.title = '전체'
+    if (path === '/') this.title = '모든 에이전시의 프로젝트를 확인하세요'
     if (path === '/ux') this.title = 'UX'
     if (path === '/ui') this.title = 'UI'
     if (path === '/brand') this.title = '브랜드'
@@ -48,5 +102,6 @@ export default class Main extends Vue {
   grid-template-columns: repeat(auto-fill, minmax(280px, 280px));
   row-gap: 28px;
   column-gap: 64px;
+  margin-top: 38px;
 }
 </style>

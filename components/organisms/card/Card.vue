@@ -1,21 +1,27 @@
 <template>
-  <div class="flex flex-col m-body">
+  <div class="flex flex-col card">
     <card-img class="cursor-pointer" @click.native="onProjectClicked()" />
-    <dc-text
-      class="m-content cursor-pointer"
-      content="플러스 엑스"
-      size="xs"
-      color="grey-text"
-      @click.native="onCompanyClicked()"
-    />
-    <dc-text
-      class="m-text cursor-pointer"
-      content="카카오페이지 브랜드 리뉴얼 프로젝트"
-      size="lg"
-      weight="medium"
-      @click.native="onProjectClicked()"
-    />
-    <dc-chip class="m-chip" content="#대기업" />
+    <div class="flex flex-col card-info">
+      <div class="flex flex-row cursor-pointer company-name items-center">
+        <dc-text
+          class="cursor-pointer"
+          content="플러스엑스"
+          size="xs"
+          color="grey-text"
+          @click.native="onCompanyClicked()"
+        />
+        <img src="@/assets/images/icons/btn-arrow.png" class="arrow" />
+      </div>
+
+      <dc-text
+        class="m-text cursor-pointer"
+        content="카카오페이지 브랜드 리뉴얼 프로젝트"
+        size="lg"
+        weight="medium"
+        @click.native="onProjectClicked()"
+      />
+      <dc-chip class="m-chip" content="#대기업" />
+    </div>
   </div>
 </template>
 
@@ -52,5 +58,16 @@ export default class Card extends Vue {
 }
 .m-chip {
   margin-top: 10px;
+}
+.card {
+  background-color: #2d2f33;
+  border-radius: 12px;
+}
+.card-info {
+  padding: 16px 20px 20px;
+}
+.arrow {
+  width: 16px;
+  height: 16px;
 }
 </style>

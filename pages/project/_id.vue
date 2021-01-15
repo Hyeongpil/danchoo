@@ -3,15 +3,17 @@
     <div class="flex flex-row margin-bottom items-center">
       <dc-icon icon="chevron-left" class="cursor-pointer" @click.native="backClicked()" />
       <div class="flex flex-col margin-left">
-        <dc-text
-          class="m-text cursor-pointer"
-          content="플러스엑스"
-          size="sm"
-          weight="light"
-          color="darkgrey"
-          @click.native="companyClicked()"
-        />
-        <dc-text class="m-text" content="kakaopage 리뉴얼" size="2xl" weight="medium" />
+        <div class="flex flex-row cursor-pointer company-name items-center">
+          <dc-text
+            content="플러스엑스"
+            size="sm"
+            weight="normal"
+            color="darkgrey"
+            @click.native="companyClicked()"
+          />
+          <img src="@/assets/images/icons/btn-arrow.png" class="arrow" />
+        </div>
+        <dc-text class="m-text" content="kakaopage 리뉴얼" size="2xl" weight="bold" />
       </div>
     </div>
 
@@ -47,10 +49,19 @@ export default class Project extends Vue {
 }
 
 .margin-bottom {
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .wrap-content {
   width: 100%;
+}
+
+.company-name:hover {
+  opacity: 50%;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
 }
 </style>
