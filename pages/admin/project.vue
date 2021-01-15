@@ -12,7 +12,7 @@
     <admin-file-tab class="mb-5" @onTabChanged="handleTab" />
 
     <client-only>
-      <dc-ag-grid :row-data.sync="getProjectList" :column-defs="columnDefs" />
+      <dc-ag-grid :row-data.sync="getProjectList" :column-defs="nowColumnDef" />
     </client-only>
 
     <div class="mt-10">
@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts">
+import { CellEvent } from '@ag-grid-community/all-modules'
 import { Component, Vue } from 'nuxt-property-decorator'
 import Toastify from 'toastify-js'
 import DcAgGrid from '~/components/atoms/ag-grid/DcAgGrid.vue'
@@ -103,16 +104,43 @@ export default class AdminFile extends Vue {
   private companyName = ''
   private industryType = ''
   private thumbnailImageUrl = ''
-  private imageUrls = []
+  private imageUrls = ''
   private projectList = []
   private nowFilter = 'success'
 
-  private columnDefs: any[] = [
+  private successColumnDefs: any[] = [
     { headerName: '프로젝트 이름', field: 'projectName' },
     { headerName: '회사명', field: 'companyName' },
     { headerName: '카테고리', field: 'categoryType' },
-    { headerName: '회사 유형', field: 'industryType' }
+    { headerName: '회사 규모', field: 'clientScaleType' },
+    { headerName: '회사 유형', field: 'industryType' },
+    { headerName: '썸네일 이미지 URL', field: 'thumbnailImageUrl' },
+    { headerName: '이미지 URL', field: 'imageUrls' }
   ]
+
+  private failColumnDefs: any[] = [
+    {
+      headerName: '재요청',
+      cellRenderer: (params: CellEvent) => {
+        const buttonElem = document.createElement('BUTTON')
+        buttonElem.innerHTML = '다시 등록하기'
+        buttonElem.addEventListener('click', () => {
+          this.setProject(params.data, params.data.id)
+        })
+
+        return buttonElem
+      }
+    },
+    { headerName: '프로젝트 이름', field: 'projectName', editable: true },
+    { headerName: '회사명', field: 'companyName', editable: true },
+    { headerName: '카테고리', field: 'categoryType', editable: true },
+    { headerName: '회사 규모', field: 'clientScaleType', editable: true },
+    { headerName: '회사 유형', field: 'industryType', editable: true },
+    { headerName: '썸네일 이미지 URL', field: 'thumbnailImageUrl', editable: true },
+    { headerName: '이미지 URL', field: 'imageUrls', editable: true }
+  ]
+
+  private nowColumnDef: any[] = this.successColumnDefs
 
   private categoryOptions: ISelectOption[] = [
     { key: 'UI_UX', value: 'UI_UX' },
@@ -194,10 +222,11 @@ export default class AdminFile extends Vue {
   private handleTab(tab: string) {
     if (tab === 'success') {
       this.fetchProject()
+      this.nowColumnDef = this.successColumnDefs
     } else {
       this.fetchFailProject()
+      this.nowColumnDef = this.failColumnDefs
     }
-    console.log('tab :', tab)
   }
 
   private onSubmit() {
@@ -208,12 +237,15 @@ export default class AdminFile extends Vue {
       companyName: this.companyName,
       industryType: this.industryType,
       thumbnailImageUrl: this.thumbnailImageUrl,
-      imageUrls: this.imageUrls
+      imageUrls: this.imageUrls.split(',')
     }
+    this.setProject(project, '')
+  }
 
+  private setProject(project: IProject, id: string) {
     this.$repositories.project
       .setProject(project)
-      .then((res) => {
+      .then(async () => {
         this.fetchProject()
         Toastify({
           text: '프로젝트가 등록되었습니다.',
@@ -221,6 +253,13 @@ export default class AdminFile extends Vue {
           gravity: 'top', // `top` or `bottom`
           position: 'right' // `left`, `center` or `right`
         }).showToast()
+        // 아이디가 있으면 실패요청 등록
+        if (id) {
+          await this.$repositories.project.delFailRegisterProjects(id)
+          this.fetchFailProject()
+        } else {
+          this.fetchProject()
+        }
       })
       .catch((err) => {
         console.log('err :', err)

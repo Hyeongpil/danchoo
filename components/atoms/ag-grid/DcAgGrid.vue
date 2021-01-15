@@ -12,6 +12,12 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { AgGridVue } from 'ag-grid-vue'
+import {
+  CellValueChangedEvent,
+  GridApi,
+  GridOptions,
+  GridReadyEvent
+} from '@ag-grid-community/all-modules'
 import { ICompany } from '~/types/company.interface'
 
 @Component({
@@ -27,17 +33,26 @@ export default class DcAgGrid extends Vue {
   @Prop({ required: true })
   private columnDefs: any[] = []
 
-  private gridOptions: any = {
+  private gridApi!: GridApi
+
+  get getRowData() {
+    return ''
+  }
+
+  private gridOptions: GridOptions = {
     headerHeight: 40,
     getRowStyle: () => ({
       // 'text-align': 'center'
     }),
-    components: {},
-    onGridReady(event: any) {
-      event.api.sizeColumnsToFit()
+    defaultColDef: {
+      resizable: true
     },
-    resizable: true,
-    onSelectionChanged: (event: any) => this.onSelectionChanged(event),
+    components: {},
+    onGridReady: (event: GridReadyEvent) => {
+      event.api.sizeColumnsToFit()
+      this.gridApi = event.api
+    },
+    onCellValueChanged: (event: CellValueChangedEvent) => this.onCellValueChanged(event),
     overlayLoadingTemplate: '<span class="ag-overlay-loading-center">불러오는 중</span>',
     overlayNoRowsTemplate:
       '<span class="ag-overlay-loading-center">데이터가 없습니다.</span>'
@@ -45,11 +60,11 @@ export default class DcAgGrid extends Vue {
 
   @Watch('columnDefs')
   private onColumnChanged() {
-    this.gridOptions.api.refreshCells({ force: true })
+    this.gridApi.refreshCells({ force: true })
   }
 
-  private onSelectionChanged(event: any) {
-    this.$emit('onSelectionChanged', event)
+  private onCellValueChanged(event: any) {
+    this.$emit('onCellValueChanged', event)
   }
 }
 </script>

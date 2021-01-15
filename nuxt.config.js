@@ -1,5 +1,6 @@
 require('dotenv').config()
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   telemetry: false,
@@ -34,7 +35,8 @@ module.exports = {
     '@/plugins/axios',
     '@/plugins/api-accessor',
     '@/plugins/cypress',
-    '@/plugins/validator'
+    '@/plugins/validator',
+    '@/plugins/global-components'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -113,6 +115,11 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+    plugins: [
+      new webpack.ProvidePlugin({
+        _: 'lodash'
+      })
+    ],
     postcss: {
       plugins: {
         'postcss-import': {},
