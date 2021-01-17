@@ -60,7 +60,7 @@ export default class DcAgGrid extends Vue {
 
   @Watch('columnDefs')
   private onColumnChanged() {
-    this.gridApi.refreshCells({ force: true })
+    if (this.gridApi) this.gridApi.refreshCells({ force: true })
   }
 
   private onCellValueChanged(event: any) {

@@ -110,10 +110,31 @@ export default class AdminFile extends Vue {
 
   private successColumnDefs: any[] = [
     { headerName: '프로젝트 이름', field: 'projectName' },
-    { headerName: '회사명', field: 'companyName' },
-    { headerName: '카테고리', field: 'categoryType' },
-    { headerName: '회사 규모', field: 'clientScaleType' },
-    { headerName: '회사 유형', field: 'industryType' },
+    { headerName: '회사명', field: 'company.companyName' },
+    {
+      headerName: '카테고리',
+      cellRenderer: (params: CellEvent) => {
+        return this.categoryOptions.filter(
+          (category) => category.key === params.data.categoryType
+        )[0].value
+      }
+    },
+    {
+      headerName: '회사 규모',
+      cellRenderer: (params: CellEvent) => {
+        return this.clientScaleTypeOptions.filter(
+          (clientScale) => clientScale.key === params.data.clientScaleType
+        )[0].value
+      }
+    },
+    {
+      headerName: '회사 유형',
+      cellRenderer: (params: CellEvent) => {
+        return this.industryTypeOptions.filter(
+          (industryType) => industryType.key === params.data.industryType
+        )[0].value
+      }
+    },
     { headerName: '썸네일 이미지 URL', field: 'thumbnailImageUrl' },
     { headerName: '이미지 URL', field: 'imageUrls' }
   ]
@@ -133,9 +154,33 @@ export default class AdminFile extends Vue {
     },
     { headerName: '프로젝트 이름', field: 'projectName', editable: true },
     { headerName: '회사명', field: 'companyName', editable: true },
-    { headerName: '카테고리', field: 'categoryType', editable: true },
-    { headerName: '회사 규모', field: 'clientScaleType', editable: true },
-    { headerName: '회사 유형', field: 'industryType', editable: true },
+    {
+      headerName: '카테고리',
+      cellRenderer: (params: CellEvent) => {
+        return this.categoryOptions.filter(
+          (category) => category.key === params.data.categoryType
+        )[0].value
+      },
+      editable: true
+    },
+    {
+      headerName: '회사 규모',
+      cellRenderer: (params: CellEvent) => {
+        return this.clientScaleTypeOptions.filter(
+          (clientScale) => clientScale.key === params.data.clientScaleType
+        )[0].value
+      },
+      editable: true
+    },
+    {
+      headerName: '회사 유형',
+      cellRenderer: (params: CellEvent) => {
+        return this.industryTypeOptions.filter(
+          (industryType) => industryType.key === params.data.industryType
+        )[0].value
+      },
+      editable: true
+    },
     { headerName: '썸네일 이미지 URL', field: 'thumbnailImageUrl', editable: true },
     { headerName: '이미지 URL', field: 'imageUrls', editable: true }
   ]
