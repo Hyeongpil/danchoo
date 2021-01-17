@@ -1,20 +1,20 @@
 <template>
   <footer>
-    <div class="flex flex-row">
+    <div class="flex flex-row p-footer">
       <img src="~/assets/images/logo.png" class="f-logo" />
       <div class="flex flex-col">
-        <!-- TODO: 정렬 수정 -->
         <dc-text
           content="Studio. Danchoo"
           size="base"
           weight="black"
           color="darkgrey"
+          class="m-footer-title"
         ></dc-text>
-        <div class="flex flex-row m-footer">
+        <div class="flex flex-row m-footer-content">
           <dc-text
             content="Designed by "
             size="base"
-            weight="500"
+            weight="bold"
             color="darkgrey"
           ></dc-text>
           <dc-text
@@ -28,7 +28,7 @@
             @click.native="onPopupOpen(name, 'UI/UX Designer', 'junyeajung@naver.com')"
           ></dc-text>
         </div>
-        <div class="flex flex-row m-footer">
+        <div class="flex flex-row m-footer-content">
           <dc-text
             content="Developed by "
             size="base"
@@ -46,7 +46,7 @@
             @click.native="onPopupOpen(name, 'Developer', 'abcd@naver.com')"
           ></dc-text>
         </div>
-        <div class="flex flex-row m-footer">
+        <div class="flex flex-row m-footer-content">
           <dc-text
             content="ⓒ 2021. Studio. Danchoo All Rights Reserved."
             size="base"
@@ -85,7 +85,6 @@ export default class Footer extends Vue {
   private position: string = ''
   private email: string = ''
 
-  // TODO: 각 이름 별 인자 넘겨서 데이터 보여주기 - 우선 하드코딩 배열로 만들어놓음
   private onPopupOpen(name: string, position: string, email: string) {
     this.name = name
     this.position = position
@@ -110,8 +109,17 @@ footer {
   right: 0;
 }
 
-.m-footer {
+.p-footer {
+  padding-top: 40px;
+}
+
+.m-footer-content {
   margin-top: 10px;
+  margin-left: 20px;
+}
+
+.m-footer-title {
+  margin-left: 20px;
 }
 
 .f-logo {

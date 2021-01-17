@@ -1,34 +1,31 @@
 <template>
   <div>
     <div class="dc-fixed background-shadow fade"></div>
-    <div class="dc-fixed">
-      <div class="flex h-screen items-center" @mousedown="$emit('close')">
-        <div class="flex flex-col popup-card" @mousedown.stop>
-          <!-- TODO: 프로필이미지, X 버튼 정렬 -->
-          <div class="flex flex-row w-full justify-center">
-            <img src="@/assets/images/default-card.png" class="img-profile m-profile" />
-            <img
-              src="@/assets/images/icons/btn-exit.png"
-              class="btn-exit flex cursor-pointer justify-end"
-              @click="onCloseClicked()"
-            />
-          </div>
-          <div class="flex flex-col justify-center items-center">
-            <dc-text class="m-info" :content="name" size="xl" weight="medium" />
-            <dc-text
-              class="m-info"
-              :content="position"
-              color="m-darkgrey"
-              size="2xs"
-              weight="medium"
-            />
-            <dc-text
-              class="m-mail underline"
-              :content="email"
-              size="lg"
-              weight="medium"
-            />
-          </div>
+    <div class="dc-fixed flex h-screen items-center" @mousedown="$emit('close')">
+      <div class="flex flex-col popup-card" @mousedown.stop>
+        <img
+          src="@/assets/images/icons/btn-exit-over.png"
+          class="btn-exit cursor-pointer fixed self-end"
+          @click="onCloseClicked()"
+        />
+        <div class="flex flex-row w-full justify-center">
+          <img src="@/assets/images/default-card.png" class="img-profile m-profile" />
+        </div>
+        <div class="flex flex-col justify-center items-center">
+          <dc-text class="m-info" :content="name" size="xl" weight="extrabold" />
+          <dc-text
+            class="m-info"
+            :content="position"
+            color="m-darkgrey"
+            size="2xs"
+            weight="extrabold"
+          />
+          <dc-text
+            class="t-mail m-mail underline cursor-pointer"
+            :content="email"
+            size="lg"
+            weight="extrabold"
+          />
         </div>
       </div>
     </div>
@@ -79,11 +76,11 @@ export default class DcPopup extends Vue {
 }
 
 .popup-card {
-  width: 249px;
-  height: 200px;
+  width: 260px;
+  height: 220px;
   background-color: #404246;
   border-radius: 6px;
-  padding: 8px;
+  padding: 8px 8px 15px 8px;
   margin: 0 auto;
   position: relative;
 }
@@ -96,25 +93,25 @@ export default class DcPopup extends Vue {
 .btn-exit {
   width: 24px;
   height: 24px;
+  opacity: 0.5;
 }
 
 .btn-exit:hover {
-  // TODO: 경로
-  content: url('../../../assets/images/icons/btn-exit-over.png');
+  opacity: 1;
 }
 .m-profile {
   margin-top: 20px;
 }
 
 .m-info {
-  margin-top: 8px;
+  margin-top: 9px;
 }
 
 .m-mail {
   margin-top: 16px;
 }
 
-// TODO: 대체법 연구
-// onmouseover="this.src='@/assets/images/icons/btn-exit-over.png';"
-// onmouseout="this.src='@/assets/images/icons/btn-exit.png';"
+.t-mail:hover {
+  opacity: 0.5;
+}
 </style>

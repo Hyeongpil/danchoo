@@ -2,7 +2,7 @@
   <div>
     <navbar-default class="dan-container" />
     <nuxt class="dan-container content-margin" />
-    <footer-default></footer-default>
+    <footer-default class="dan-container" />
   </div>
 </template>
 
